@@ -11,6 +11,7 @@ package bank;
 public class Savings extends Account {
     public static final double MONTHLYFEE = 6.0;
     public static final double MONTHLYINTEREST = 0.003 / 12;
+    public static final double MIN_BALANCE = 300.0;
     public double loyalInterest = 0.0015 / 12;
     public boolean isLoyal;
 
@@ -38,9 +39,9 @@ public class Savings extends Account {
     @Override
     public double monthlyInterest() {
         if (isLoyal) {
-            return MONTHLYINTEREST + loyalInterest;
+            return (MONTHLYINTEREST + loyalInterest) * this.balance;
         }
-        return MONTHLYINTEREST;
+        return MONTHLYINTEREST * this.balance;
     }
 
     /**
@@ -51,7 +52,7 @@ public class Savings extends Account {
     @Override
     public double fee() {
         int waivedFee = 0;
-        if (this.balance >= 300) {
+        if (this.balance >= MIN_BALANCE) {
             return waivedFee;
         }
         return MONTHLYFEE;

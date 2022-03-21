@@ -11,6 +11,7 @@ public class MoneyMarket extends Account {
     public static final double MONTHLYFEE = 10;
     public static final double MONTHLYINTEREST = 0.008 / 12;
     public static final double LOYALINTEREST = 0.0015 / 12;
+    public static final double MIN_BALANCE = 2500.0;
     public int count;
     public boolean isLoyal;
 
@@ -41,6 +42,9 @@ public class MoneyMarket extends Account {
     @Override
     public void withdraw(double amount) {
         super.withdraw(amount);
+        if (this.balance < MIN_BALANCE) {
+            this.isLoyal = false;
+        }
         count += 1;
     }
 
@@ -51,8 +55,8 @@ public class MoneyMarket extends Account {
      */
     @Override
     public double monthlyInterest() {
-        if (this.balance < 2500) {
-            isLoyal = false;
+        if (this.balance < MIN_BALANCE) {
+            this.isLoyal = false;
         }
         if (isLoyal) {
             return this.balance * (MONTHLYINTEREST + LOYALINTEREST);
@@ -71,9 +75,9 @@ public class MoneyMarket extends Account {
         if (count >= 3) {
             return MONTHLYFEE;
         }
-        if (this.balance >= 2500) {
+        if (this.balance >= MIN_BALANCE) {
             return waivedFee;
-        } else if (this.balance < 2500) {
+        } else if (this.balance < MIN_BALANCE) {
             return MONTHLYFEE;
         }
         return MONTHLYFEE;
@@ -88,16 +92,6 @@ public class MoneyMarket extends Account {
     public String getType() {
         return "Money Market Savings";
     }
-
-    //    /**
-    //     * a method to get the string representation of the balance in
-    //     the account.
-    //     *
-    //     * @return a string representation of the balance in the account
-    //     */
-    //    public String getBalance() {
-    //        return "" + super.balance;
-    //    }
 
     /**
      * a method to get the string literal of a money market account

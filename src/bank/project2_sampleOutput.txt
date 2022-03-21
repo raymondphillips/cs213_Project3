@@ -109,8 +109,8 @@ Savings::Jane Doe 10/1/1995::Balance $1,000.00
 Savings::John Doe 2/19/1990::Balance $200.00
 *end of list*
 
-April March 1/15/1987 same account(type) is in the database.
 Account reopened.
+April March 1/15/1987 same account(type) is in the database.
 April March 1/15/1987 same account(type) is in the database.
 John Doe 2/19/1989 same account(type) is in the database.
 Account opened.

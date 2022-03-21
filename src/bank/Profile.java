@@ -25,6 +25,10 @@ public class Profile {
         this.dob = date;
     }
 
+    /**
+     * main method for the Profile class
+     * @param args a string of arguments
+     */
     public static void main(String[] args) {
         Date da = new Date();
         Profile p = new Profile("John", "Adams", da);
@@ -44,6 +48,22 @@ public class Profile {
     @Override
     public String toString() {
         return fname + " " + lname + " " + dob.toString();
+    }
+
+    /**
+     * a method to get the name of the profile
+     * @return the fname and lname of the profile in string form
+     */
+    public String getName() {
+        return fname + " " + lname;
+    }
+
+    /**
+     * a method to get the date of birth of a profile
+     * @return the date of birth of the profile as a date object
+     */
+    public Date getDOB(){
+        return dob;
     }
 
     /**

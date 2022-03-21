@@ -9,7 +9,7 @@ package bank;
  */
 public class CollegeChecking extends Account {
     public static final double MONTHLYFEE = 0.0;
-    public static final double MONTHLYINTEREST = 0.025 / 12;
+    public static final double MONTHLYINTEREST = 0.0025 / 12;
 
     public static final int NEW_BRUINSWICK = 0;
     public static final int NEWARK = 1;
@@ -43,7 +43,7 @@ public class CollegeChecking extends Account {
      */
     @Override
     public double monthlyInterest() {
-        return MONTHLYINTEREST;
+        return MONTHLYINTEREST * this.balance;
     }
 
     /**

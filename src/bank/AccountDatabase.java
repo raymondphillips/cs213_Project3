@@ -9,9 +9,11 @@ package bank;
  * @author Raymond Phillips, Xiaoxuan Chen
  */
 public class AccountDatabase {
-    private static final int EMPTY = 0;
+    public static final int IN_DATABASE_AND_OPEN = -2;
+    public static final int NOT_FOUND = -1;
     private Account[] accounts;
     private int numAcct;
+
 
     /**
      * constructor for the account database class
@@ -25,12 +27,12 @@ public class AccountDatabase {
      * a private method to find the location of an account in the Database
      *
      * @param account an Account object
-     * @return an int the location of the account in the database or -1 if
+     * @return an int the location of the account in the database or
+     * NOT_FOUND if
      * not found
      */
     private int find(Account account) {
         int i;
-        int NOT_FOUND = -1;
         if (this.accounts == null) {
             return NOT_FOUND;
         }
@@ -39,6 +41,27 @@ public class AccountDatabase {
                 return NOT_FOUND;
             }
             if (account.equals(this.accounts[i])) {
+                return i;
+            }
+        }
+        return NOT_FOUND;
+    }
+
+    /**
+     * a find method for the deposit case
+     * @param account an Account object
+     * @return an int of the location of the acc in the database
+     */
+    public int depositFind(Account account){
+        int i;
+        if (this.accounts == null) {
+            return NOT_FOUND;
+        }
+        for (i = 0; i < this.accounts.length; i++) {
+            if (this.accounts[i] == null) {
+                return NOT_FOUND;
+            }
+            if (account.depositEquals(this.accounts[i])) {
                 return i;
             }
         }
@@ -71,16 +94,21 @@ public class AccountDatabase {
         if (accountLocation < 0) {
             accounts[numAcct++] = account;
             return true;
+
         } else {
-            if (accounts[accountLocation].getAccountStatus() == true) {
-                accounts[accountLocation] = account;
-                return true;
-            }
-            if (accounts[accountLocation].equals(account)) {
-                return false;
+            if (accounts[accountLocation].getClosedStatus()) {
+                if (accounts[accountLocation].getType()
+                                             .equals(account.getType())) {
+                    accounts[accountLocation] = account;
+                    return true;
+                }
             } else {
-                return false;
+                if (accounts[accountLocation].equals(account)) {
+                    accounts[numAcct++] = account;
+                    return true;
+                }
             }
+            return false;
         }
     }
 
@@ -92,7 +120,7 @@ public class AccountDatabase {
      */
     public boolean close(Account account) {
         int x = this.find(account);
-        if (x == -1) {
+        if (x == NOT_FOUND) {
             return false;
         } else {
             if (account.getType().equals("Savings")) {
@@ -115,8 +143,8 @@ public class AccountDatabase {
      * @param account, an Account obj in which the money needs to go into
      */
     public void deposit(Account account) {
-        int acc = this.find(account);
-        if (acc > -1) {
+        int acc = this.depositFind(account);
+        if (acc > NOT_FOUND) {
             accounts[acc].deposit(account.balance);
         }
     }
@@ -129,8 +157,8 @@ public class AccountDatabase {
      * @return false if there are not enough funds in the account.
      */
     public boolean withdraw(Account account) {
-        int acc = this.find(account);
-        if (acc > -1) {
+        int acc = this.depositFind(account);
+        if (acc > NOT_FOUND) {
             if (accounts[acc].balance < account.getBalance()) {
                 return false;
             } else {
@@ -161,35 +189,53 @@ public class AccountDatabase {
         System.out.println("*end of list*\n");
     }
 
+
     /**
      * prints out accounts in the database based on type
      */
     public void printByAccountType() {
-        int i, x;
+        int i, x, a = 0, w = 0, d = 0, f = 0;
         if (accounts[0] == null) {
             System.out.println("Account Database is empty!");
             return;
         }
+        Account[] cc = new Account[accounts.length], c =
+                new Account[accounts.length], s =
+                new Account[accounts.length], mm =
+                new Account[accounts.length];
+        for (i = 0; i < accounts.length; i++) {
+            if (this.accounts[i] == null) {
+                break;
+            } else if (accounts[i].getType().equals("College Checking")) {
+                cc[a++] = accounts[i];
+            } else if (accounts[i].getType().equals("Checking")) {
+                c[w++] = accounts[i];
+            } else if (accounts[i].getType().equals("Savings")) {
+                s[d++] = accounts[i];
+            } else if (accounts[i].getType().equals("Money Market Savings")) {
+                mm[f++] = accounts[i];
+            }
+        }
         for (x = 0; x < 4; x++) {
-            for (i = 0; i < accounts.length; i++) {
-
-                if (this.accounts[i] == null) {
-                    break;
-                } else if (accounts[i].getType().equals("College Checking") &&
-                        x == 1) {
-                    System.out.println(
-                            ((CollegeChecking) accounts[i]).toString());
-                } else if (accounts[i].getType().equals("Checking") &&
-                        x == 0) {
-                    System.out.println(accounts[i].toString());
-                } else if (accounts[i].getType().equals("Savings") &&
-                        x == 3) {
-                    System.out.println(((Savings) accounts[i]).toString());
-                } else if (accounts[i].getType()
-                                      .equals("Money Market Savings") &&
-                        x == 2) {
-                    System.out.println(
-                            ((MoneyMarket) accounts[i]).toString());
+            if (x == 0) {
+                for (i = 0; i < w; i++) {
+                    accounts[i] = c[i];
+                    System.out.println(c[i].toString());
+                }
+            } else if (x == 1) {
+                for (i = 0; i < a; i++) {
+                    accounts[i + w] = cc[i];
+                    System.out.println(cc[i].toString());
+                }
+            } else if (x == 2) {
+                for (i = 0; i < f; i++) {
+                    accounts[i + w + a] = mm[i];
+                    System.out.println(mm[i].toString());
+                }
+            } else if (x == 3) {
+                for (i = 0; i < d; i++) {
+                    accounts[i + w + a + f] = s[i];
+                    System.out.println(s[i].toString());
                 }
             }
         }
@@ -206,7 +252,7 @@ public class AccountDatabase {
         }
         System.out.println(
                 "\n*list of accounts with fee and " + "monthly interest");
-        int i, x = 0;
+        int i, x;
         for (x = 0; x < 4; x++) {
             for (i = 0; i < accounts.length; i++) {
 
@@ -245,11 +291,11 @@ public class AccountDatabase {
                 return;
             }
 
-            for (int i = 0; i < accounts.length; i++) {
-                if (this.accounts[i] == null) {
+            for (Account account : accounts) {
+                if (account == null) {
                     break;
                 } else {
-                    accounts[i].updateBalanceWithFeesAndInterest();
+                    account.updateBalanceWithFeesAndInterest();
                 }
             }
         }
@@ -260,72 +306,103 @@ public class AccountDatabase {
      * a public method to search the database
      *
      * @param account an account object
-     * @return -1 if not found, otherwise the position of the account in
+     * @return NOT_FOUND if not found, otherwise the position of the
+     * account in
      * the database
      */
     public int searchDatabase(Account account) {
-        int NOT_FOUND = -1;
         int loc = this.find(account);
-        if (loc > -1) {
-            if (this.accounts[loc].getAccountStatus()) {
-                return NOT_FOUND;
+        if (loc > NOT_FOUND) {
+            if (!this.accounts[loc].getClosedStatus()) {
+                return -2;
+            } else {
+                return loc;
             }
+        } else {
+            return NOT_FOUND;
         }
-        return loc;
+    }
+
+    /**
+     * a public method to search the database
+     *
+     * @param account an account object
+     * @return NOT_FOUND if not found, otherwise the position of the
+     * account in
+     * the database
+     */
+    public int depositSearchDatabase(Account account){
+        int loc = this.depositFind(account);
+        if (loc > NOT_FOUND) {
+            if (!this.accounts[loc].getClosedStatus()) {
+                return -2;
+            } else {
+                return loc;
+            }
+        } else {
+            return NOT_FOUND;
+        }
     }
 
     /**
      * a method to get the account at a certain location in the database
      *
-     * @param account a acc objeect
+     * @param account a acc object
      * @return a similar acc object in the database
      */
     public Account getAccount(Account account) {
-        int NOT_FOUND = -1;
-        int result = searchDatabase(account);
-        if(result == NOT_FOUND) return null;
-        return accounts[result];
+        int result = depositSearchDatabase(account);
+        if (result == NOT_FOUND) {
+            return null;
+        }
+        if (result == IN_DATABASE_AND_OPEN) {
+            return accounts[this.depositFind(account)];
+        } else {
+            return accounts[result];
+        }
     }
 
+    /**
+     * get the account status of an account
+     * @param acc
+     * @return
+     */
     public boolean getAccStatus(Account acc) {
         int loc = this.find(acc);
-        if (loc > -1){
-            return accounts[loc].getAccountStatus();
+        if (loc > NOT_FOUND) {
+            return accounts[loc].getClosedStatus();
         }
         return false;
     }
 
     /**
-     * a method to see if the db is empty
+     * a method the check whether the database is empty or not
      *
-     * @return true if not empty otherwise not
+     * @return ture if the database is empty otherwise false.
      */
-    public boolean isNotNull() {
-        if (accounts[0] == null) {
-            return false;
+    public boolean isEmpty() {
+        if (this.numAcct == 0) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
-     * a method the check whether the database is empty or not
-     *
-     * @return ture if the database is empty other wise false.
+     * check to see if acc is college checking or regular checking
+     * @param acc an account object
+     * @return true if it exists, false otherwise
      */
-    public boolean isEmpty() {
+    public boolean checkCOrCCCrossExists(Account acc){
+        if(this.accounts == null) return false;
 
-        if (this.accounts == null) {
-            return true;
-        }
-        int i;
-        for (i = 0; i < this.accounts.length; i++) {
-            if (this.accounts[i] == null) {
-                break;
-            }
-            if (this.accounts[i].getAccountStatus() == false) {
-                return false;
+        for(int i = 0; i < this.accounts.length; i++){
+            if(this.accounts[i] == null) break;
+            if((acc.getType().equals("Checking") && this.accounts[i].getType().equals("College Checking")) ||
+                    (acc.getType().equals("College Checking")) && this.accounts[i].getType().equals("Checking")){
+                if(acc.equals(this.accounts[i]) && !this.accounts[i].closed) return true;
             }
         }
-        return true;
+
+        return false;
     }
 }

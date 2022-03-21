@@ -10,6 +10,7 @@ package bank;
 public class Checking extends Account {
     public static final double MONTHLYFEE = 25;
     public static final double MONTHLYINTEREST = 0.001 / 12;
+    public static final double MIN_BALANCE = 1000.0;
 
     /**
      * constructor method for the Savings class
@@ -43,7 +44,7 @@ public class Checking extends Account {
      */
     @Override
     public double monthlyInterest() {
-        return MONTHLYINTEREST;
+        return MONTHLYINTEREST * this.balance;
     }
 
     /**
@@ -54,7 +55,7 @@ public class Checking extends Account {
     @Override
     public double fee() {
         int waivedFee = 0;
-        if (this.balance >= 1000) {
+        if (this.balance >= MIN_BALANCE) {
             return waivedFee;
         }
         return MONTHLYFEE;
