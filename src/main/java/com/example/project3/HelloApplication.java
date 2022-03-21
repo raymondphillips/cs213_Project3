@@ -1,4 +1,4 @@
-package com.example.project3;
+package src.main.java.com.example.project3;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +19,6 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }
