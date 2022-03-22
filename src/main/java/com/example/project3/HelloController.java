@@ -44,6 +44,7 @@ public class HelloController {
     public void initialize(Stage primaryStage) throws Exception{
         //disable editing for textarea
         consoleOutput.setEditable(false);
+        consoleOutput.setText("pee\npee\npee\npee\npee\npee\npee\npee\npee\npee\npee\npee\npee\npee\npee\npee\npee\n");
         //initialize bankteller
         teller = new BankTeller();
         teller.accountDatabase = new AccountDatabase();
