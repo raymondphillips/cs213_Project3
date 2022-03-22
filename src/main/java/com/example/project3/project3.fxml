@@ -171,6 +171,6 @@
       </TabPane>
    </top>
    <center>
-      <TextArea fx:id="consoleOutput" prefHeight="164.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      <TextArea fx:id="consoleOutput" maxHeight="200.0" maxWidth="500.0" minHeight="100.0" minWidth="100.0" prefHeight="164.0" prefWidth="600.0" translateY="-80.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
