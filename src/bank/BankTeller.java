@@ -1,4 +1,4 @@
-package bank;
+package src.bank;
 
 import java.util.Scanner;
 
@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class BankTeller {
     public static final int IN_DATABASE_AND_OPEN = -2;
     public static final int NOT_FOUND = -1;
-    AccountDatabase accountDatabase;
+    public AccountDatabase accountDatabase;
 
     /**
      * a method to constantly check for user input\commands and execute the
@@ -52,7 +52,7 @@ public class BankTeller {
      *
      * @param strArr a string that starts with a command and executes it
      */
-    private void handle(String[] strArr) {
+    public void handle(String[] strArr) {
         int NOT_FOUND = -1;
 
         switch (strArr[0]) {

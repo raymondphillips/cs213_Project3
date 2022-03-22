@@ -1,4 +1,4 @@
-package bank;
+package src.bank;
 
 /**
  * class extends the Checking class and includes specific data and

@@ -1,4 +1,4 @@
-package bank;
+package src.bank;
 
 /**
  * class extends the Account class and includes specific data and

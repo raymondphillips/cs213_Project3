@@ -1,4 +1,4 @@
-package bank;
+package src.bank;
 
 /**
  * An Account Database class that holds a list of information about the

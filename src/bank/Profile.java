@@ -1,4 +1,4 @@
-package bank;
+package src.bank;
 
 /**
  * A profile class that represents a users profile

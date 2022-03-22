@@ -1,4 +1,4 @@
-package bank;
+package src.bank;
 
 import java.util.Calendar;
 import java.util.StringTokenizer;
