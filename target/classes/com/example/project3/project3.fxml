@@ -16,7 +16,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -39,7 +38,7 @@
                               <RowConstraints maxHeight="31.645416259765625" minHeight="0.0" prefHeight="29.03248404217274" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <TextField GridPane.columnIndex="1" />
+                              <TextField fx:id="fname" GridPane.columnIndex="1" />
                               <Label text="First Name" />
                               <Label text="Last Name" GridPane.rowIndex="1" />
                               <Label text="Date of Birth" GridPane.rowIndex="2" />
@@ -54,18 +53,19 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="Checking">
+                                    <RadioButton fx:id="accC" mnemonicParsing="false" text="Checking">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="acctype" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton mnemonicParsing="false" text="College Checking" toggleGroup="$acctype" GridPane.columnIndex="1" />
-                                    <RadioButton mnemonicParsing="false" text="Savings" toggleGroup="$acctype" GridPane.rowIndex="1" />
-                                    <RadioButton mnemonicParsing="false" prefHeight="72.0" prefWidth="120.0" text="Money Market" toggleGroup="$acctype" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <RadioButton fx:id="accCC" mnemonicParsing="false" text="College Checking" toggleGroup="$acctype" GridPane.columnIndex="1" />
+                                    <RadioButton fx:id="accS" mnemonicParsing="false" text="Savings" toggleGroup="$acctype" GridPane.rowIndex="1" />
+                                    <RadioButton fx:id="accMM" mnemonicParsing="false" prefHeight="72.0" prefWidth="120.0" text="Money Market" toggleGroup="$acctype" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <DatePicker prefHeight="24.0" prefWidth="322.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="Lname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="dob" prefHeight="24.0" prefWidth="322.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <CheckBox fx:id="loyalCus" mnemonicParsing="false" text="loyal customer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <GridPane GridPane.columnIndex="2" GridPane.rowIndex="3">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -75,7 +75,6 @@
                                   <RowConstraints maxHeight="25.00020000159588" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <CheckBox mnemonicParsing="false" text="loyal customer" GridPane.rowIndex="1" />
                                     <GridPane>
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -86,21 +85,21 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <RadioButton mnemonicParsing="false" text="Newark" GridPane.rowIndex="1">
+                                          <RadioButton fx:id="CCN" mnemonicParsing="false" text="Newark" GridPane.rowIndex="1">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="campus" />
                                              </toggleGroup>
                                           </RadioButton>
-                                          <RadioButton mnemonicParsing="false" text="NB" toggleGroup="$campus" />
-                                          <RadioButton mnemonicParsing="false" text="Camden" toggleGroup="$campus" GridPane.rowIndex="2" />
+                                          <RadioButton fx:id="CCNB" mnemonicParsing="false" text="NB" toggleGroup="$campus" />
+                                          <RadioButton fx:id="CCC" mnemonicParsing="false" text="Camden" toggleGroup="$campus" GridPane.rowIndex="2" />
                                        </children>
                                     </GridPane>
                                  </children>
                               </GridPane>
                               <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Open" />
-                                    <Button mnemonicParsing="false" text="Close" />
+                                    <Button fx:id="open" mnemonicParsing="false" text="Open" />
+                                    <Button fx:id="close" mnemonicParsing="false" text="Close" />
                                  </children>
                               </HBox>
                            </children>
