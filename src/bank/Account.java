@@ -25,22 +25,40 @@ public abstract class Account {
      */
     @Override
     public boolean equals(Object obj) {
-        Account acc = (Account) obj;
-        if (this.holder.toString().equalsIgnoreCase(acc.holder.toString()) &&
-                this.getType().equals(acc.getType())) {
-            return true;
-        } else if (this.holder.toString()
-                              .equalsIgnoreCase(acc.holder.toString()) &&
-                acc.getType().equals("Checking") &&
-                this.getType().equals("College Checking")) {
-            return true;
-        } else if (this.holder.toString()
-                              .equalsIgnoreCase(acc.holder.toString()) &&
-                acc.getType().equals("College Checking") &&
-                this.getType().equals("Checking")) {
-            return true;
+        if (!(obj instanceof Account acc)) {
+            return false;
         }
-        return false;
+        if (this.holder.getName().equalsIgnoreCase(acc.holder.getName())) {
+            if (this.holder.getDOB().compareTo(acc.holder.getDOB()) == 0) {
+                return (this.getType().equals(acc.getType()) ||
+                        (acc.getType().equals("Checking") && this.getType().equals("College Checking")) ||
+                        (acc.getType().equals("College Checking") && this.getType().equals("Checking")));
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * a method to check equality between accounts for depositing money
+     * @param obj an account object
+     * @return true if accounts are the same false otherwise
+     */
+    public boolean depositEquals(Object obj){
+        if (!(obj instanceof Account acc)) {
+            return false;
+        }
+        if (this.holder.getName().equalsIgnoreCase(acc.holder.getName())) {
+            if (this.holder.getDOB().compareTo(acc.holder.getDOB()) == 0) {
+                return this.getType().equals(acc.getType());
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -51,7 +69,7 @@ public abstract class Account {
     @Override
     public String toString() {
         DecimalFormat formatter = new DecimalFormat("#,##0.00");
-        if (this.closed == true) {
+        if (this.closed) {
             return this.getType() + "::" + this.holder.toString() +
                     "::Balance $" + formatter.format(this.balance) +
                     "::CLOSED";
@@ -90,7 +108,7 @@ public abstract class Account {
      * interest.
      */
     public void updateBalanceWithFeesAndInterest() {
-        if (this.closed == false) {
+        if (!this.closed) {
             this.balance = this.monthlyInterest() - this.fee() + this.balance;
         }
     }
@@ -143,7 +161,7 @@ public abstract class Account {
      *
      * @return the closed/open status of account.
      */
-    public boolean getAccountStatus() {
+    public boolean getClosedStatus() {
         return this.closed;
     }
 }
