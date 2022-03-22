@@ -24,6 +24,7 @@ public class HelloController {
     @FXML TextField fnametext;
     @FXML TextField lnametext;
     @FXML TextField dobpicker;
+    @FXML TextField openingDeposit;
     @FXML ToggleGroup acctype;
     @FXML RadioButton checking;
     @FXML RadioButton collegeChecking;
@@ -50,9 +51,13 @@ public class HelloController {
             @Override
             public void handle(ActionEvent event) {
                 NB.setDisable(true);
+                NB.setSelected(false);
                 Newark.setDisable(true);
+                Newark.setSelected(false);
                 Camden.setDisable(true);
+                Camden.setSelected(false);
                 loyal.setDisable(true);
+                loyal.setSelected(false);
             }
         });
 
@@ -63,6 +68,7 @@ public class HelloController {
                 Newark.setDisable(false);
                 Camden.setDisable(false);
                 loyal.setDisable(true);
+                loyal.setSelected(false);
             }
         });
 
@@ -70,8 +76,11 @@ public class HelloController {
             @Override
             public void handle(ActionEvent event) {
                 NB.setDisable(true);
+                NB.setSelected(false);
                 Newark.setDisable(true);
+                Newark.setSelected(false);
                 Camden.setDisable(true);
+                Camden.setSelected(false);
                 loyal.setDisable(false);
             }
         });
@@ -80,9 +89,13 @@ public class HelloController {
             @Override
             public void handle(ActionEvent event) {
                 NB.setDisable(true);
+                NB.setSelected(false);
                 Newark.setDisable(true);
+                Newark.setSelected(false);
                 Camden.setDisable(true);
+                Camden.setSelected(false);
                 loyal.setDisable(true);
+                loyal.setSelected(false);
             }
         });
     }
@@ -99,7 +112,7 @@ public class HelloController {
         if(selected == null){
             //error handle
         } else{
-            selectedAccount = selected.getText();
+            selectedAccount = convertAcctTypeToCode(selected.getText());
         }
 
         //selected campus code
@@ -108,12 +121,25 @@ public class HelloController {
         if(selectedCampus == null){
             //error handle
         } else{
-            selectedAccount = convertAcctTypeToCode(selected.getText());
+            selectedValCampus = convertCampusCode(selectedCampus.getText());
         }
 
-        //loyal or not
-        boolean loyaltyCheck = loyal.isSelected();
+        //opening deposit
+        String openingDep = openingDeposit.getText();
 
+        //loyal or not
+        String loyaltyCheck = convertBooleanToLoyalty(loyal.isSelected());
+
+        String userCommand = "O\t" + selectedAccount + "\t" + fname + " " + lname + " " + dob +
+                " " + openingDep;
+
+        if(selectedAccount.equals("S")) userCommand += " " + loyaltyCheck;
+        if(selectedAccount.equals("CC")) userCommand += " " + selectedValCampus;
+
+        String[] strArr =
+                (userCommand.replaceAll("\\s+", " ").split(" "));
+
+        teller.handle(strArr);
     }
 
     public void controllerClose(ActionEvent e) throws IOException{
@@ -148,5 +174,17 @@ public class HelloController {
         }
 
         return "";
+    }
+
+    public String convertBooleanToLoyalty(boolean b){
+        if(b) return "1";
+        return "0";
+    }
+
+    public String convertCampusCode(String campusC){
+        String str = campusC.trim();
+        if(str.equals("NB")) return "0";
+        else if(str.equals("Newark")) return "1";
+        else return "2";
     }
 }
