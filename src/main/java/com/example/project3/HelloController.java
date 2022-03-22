@@ -35,14 +35,19 @@ public class HelloController {
     @FXML RadioButton Camden;
     @FXML CheckBox loyal;
     @FXML ToggleGroup campus;
+    @FXML TextArea consoleOutput;
 
     BankTeller teller;
     public static final int IN_DATABASE_AND_OPEN = -2;
     public static final int NOT_FOUND = -1;
 
     public void initialize(Stage primaryStage) throws Exception{
+        //disable editing for textarea
+        consoleOutput.setEditable(false);
+        //initialize bankteller
         teller = new BankTeller();
         teller.accountDatabase = new AccountDatabase();
+        //initialize buttons
         NB.setDisable(true);
         Newark.setDisable(true);
         Camden.setDisable(true);
