@@ -1,5 +1,6 @@
 package src.main.java.com.example.project3;
 
+import javafx.scene.input.KeyEvent;
 import src.bank.AccountDatabase;
 import src.bank.BankTeller;
 import javafx.event.ActionEvent;
@@ -117,6 +118,22 @@ public class HelloController {
                 Camden.setSelected(false);
                 loyal.setDisable(true);
                 loyal.setSelected(false);
+            }
+        });
+
+        openingDeposit.setOnKeyTyped(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent event){
+                String currentText = openingDeposit.getText();
+
+                try{
+                    int num = Integer.parseInt(currentText);
+                    if(num >= 2500){
+                        loyal.setSelected(true);
+                    }
+                } catch(NumberFormatException e){
+
+                }
             }
         });
     }
@@ -241,28 +258,32 @@ public class HelloController {
         String userCommand = "P";
         String[] strArr =
                 (userCommand.replaceAll("\\s+", " ").split(" "));
-        teller.handle(strArr);
+        String output = teller.handle(strArr);
+        consoleOutput.setText(output);
     }
 
     public void controllerPrintByType(ActionEvent e) throws IOException{
         String userCommand = "PT";
         String[] strArr =
                 (userCommand.replaceAll("\\s+", " ").split(" "));
-        teller.handle(strArr);
+        String output = teller.handle(strArr);
+        consoleOutput.setText(output);
     }
 
     public void controllerPrintWithFeesInterest(ActionEvent e) throws IOException{
         String userCommand = "PI";
         String[] strArr =
                 (userCommand.replaceAll("\\s+", " ").split(" "));
-        teller.handle(strArr);
+        String output = teller.handle(strArr);
+        consoleOutput.setText(output);
     }
 
     public void controllerUpdateBalancesAndDisplay(ActionEvent e) throws IOException{
         String userCommand = "UB";
         String[] strArr =
                 (userCommand.replaceAll("\\s+", " ").split(" "));
-        teller.handle(strArr);
+        String output = teller.handle(strArr);
+        consoleOutput.setText(output);
     }
 
     private String convertAcctTypeToCode(String acctType){

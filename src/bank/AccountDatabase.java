@@ -172,32 +172,38 @@ public class AccountDatabase {
     /**
      * prints out the current account in the database
      */
-    public void print() {
+    public String print() {
         if (accounts[0] == null) {
-            System.out.println("Account Database is empty!");
-            return;
+            //System.out.println();
+            return "Account Database is empty!";
         }
 
-        System.out.println("\n*list of accounts in the database*");
+        String toReturn = "*list of accounts in the database*\n";
+        //System.out.println("\n*list of accounts in the database*");
         int i;
         for (i = 0; i < accounts.length; i++) {
             if (this.accounts[i] == null) {
                 break;
             }
-            System.out.println(accounts[i].toString());
+            //System.out.println(accounts[i].toString());
+            toReturn += accounts[i].toString() + "\n";
         }
-        System.out.println("*end of list*\n");
+        toReturn += "*end of list*\n";
+        //System.out.println("*end of list*\n");
+        return toReturn;
     }
 
 
     /**
      * prints out accounts in the database based on type
      */
-    public void printByAccountType() {
+    public String printByAccountType() {
         int i, x, a = 0, w = 0, d = 0, f = 0;
+        String toReturn = "";
         if (accounts[0] == null) {
-            System.out.println("Account Database is empty!");
-            return;
+            //System.out.println("Account Database is empty!");
+            toReturn = "Account Database is empty!";
+            return toReturn;
         }
         Account[] cc = new Account[accounts.length], c =
                 new Account[accounts.length], s =
@@ -220,38 +226,45 @@ public class AccountDatabase {
             if (x == 0) {
                 for (i = 0; i < w; i++) {
                     accounts[i] = c[i];
-                    System.out.println(c[i].toString());
+                    //System.out.println(c[i].toString());
+                    toReturn += c[i].toString() + "\n";
                 }
             } else if (x == 1) {
                 for (i = 0; i < a; i++) {
                     accounts[i + w] = cc[i];
-                    System.out.println(cc[i].toString());
+                    //System.out.println(cc[i].toString());
+                    toReturn += cc[i].toString() + "\n";
                 }
             } else if (x == 2) {
                 for (i = 0; i < f; i++) {
                     accounts[i + w + a] = mm[i];
-                    System.out.println(mm[i].toString());
+                    //System.out.println(mm[i].toString());
+                    toReturn += mm[i].toString() + "\n";
                 }
             } else if (x == 3) {
                 for (i = 0; i < d; i++) {
                     accounts[i + w + a + f] = s[i];
-                    System.out.println(s[i].toString());
+                    //System.out.println(s[i].toString());
+                    toReturn += s[i].toString() + "\n";
                 }
             }
         }
-        System.out.println("*end of list.\n");
+        toReturn += "*end of list.\n";
+        //System.out.println("*end of list.\n");
+        return toReturn;
     }
 
     /**
      * prints out the fee and interest rates of the accounts in the database
      */
-    public void printFeeAndInterest() {
+    public String printFeeAndInterest() {
         if (accounts[0] == null) {
-            System.out.println("Account Database is empty!");
-            return;
+            //System.out.println("Account Database is empty!");
+            return "Account Database is empty!";
         }
-        System.out.println(
-                "\n*list of accounts with fee and " + "monthly interest");
+//        System.out.println(
+//                "\n*list of accounts with fee and " + "monthly interest");
+        String toReturn = "*list of accounts with fee and monthly interest\n";
         int i, x;
         for (x = 0; x < 4; x++) {
             for (i = 0; i < accounts.length; i++) {
@@ -260,25 +273,31 @@ public class AccountDatabase {
                     break;
                 } else if (accounts[i].getType().equals("College Checking") &&
                         x == 1) {
-                    System.out.println(
-                            ((CollegeChecking) accounts[i]).toStringFeesAndInterest());
+//                    System.out.println(
+//                            ((CollegeChecking) accounts[i]).toStringFeesAndInterest());
+                    toReturn += ((CollegeChecking) accounts[i]).toStringFeesAndInterest() + "\n";
                 } else if (accounts[i].getType().equals("Checking") &&
                         x == 0) {
-                    System.out.println(
-                            ((Checking) accounts[i]).toStringFeesAndInterest());
+//                    System.out.println(
+//                            ((Checking) accounts[i]).toStringFeesAndInterest());
+                    toReturn += ((Checking) accounts[i]).toStringFeesAndInterest() + "\n";
                 } else if (accounts[i].getType().equals("Savings") &&
                         x == 3) {
-                    System.out.println(
-                            ((Savings) accounts[i]).toStringFeesAndInterest());
+//                    System.out.println(
+//                            ((Savings) accounts[i]).toStringFeesAndInterest());
+                    toReturn += ((Savings) accounts[i]).toStringFeesAndInterest() + "\n";
                 } else if (accounts[i].getType()
                                       .equals("Money Market " + "Savings") &&
                         x == 2) {
-                    System.out.println(
-                            ((MoneyMarket) accounts[i]).toStringFeesAndInterest());
+//                    System.out.println(
+//                            ((MoneyMarket) accounts[i]).toStringFeesAndInterest());
+                    toReturn += ((MoneyMarket) accounts[i]).toStringFeesAndInterest() + "\n";
                 }
             }
         }
-        System.out.println("*end of list.\n");
+        //System.out.println("*end of list.\n");
+        toReturn += "*end of list.\n";
+        return toReturn;
     }
 
     /**

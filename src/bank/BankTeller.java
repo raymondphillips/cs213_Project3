@@ -78,21 +78,21 @@ public class BankTeller {
                 break;
             case "P":
                 if (isInformationValid(strArr)) {
-                    this.accountDatabase.print();
+                    toReturn = this.accountDatabase.print();
                 }
                 break;
             case "PT":
                 if (isInformationValid(strArr)) {
                     if (!accountDatabase.isEmpty()) {
-                        System.out.println(
-                                "\n*list of accounts by account type.");
+                        //System.out.println("\n*list of accounts by account type.");
+                        toReturn += "*list of accounts by account type.\n";
                     }
-                    this.accountDatabase.printByAccountType();
+                    toReturn += this.accountDatabase.printByAccountType();
                 }
                 break;
             case "PI":
                 if (isInformationValid(strArr)) {
-                    this.accountDatabase.printFeeAndInterest();
+                    toReturn += this.accountDatabase.printFeeAndInterest();
                 }
                 break;
             case "UB":
@@ -165,6 +165,8 @@ public class BankTeller {
                     } else if (strArr[6].equals("0")) {
                         loyalty = false;
                     }
+
+
                     ((Savings) acc).setLoyalty(loyalty);
                 }
                 case "MM" -> ((MoneyMarket) acc).setLoyalty(false);
