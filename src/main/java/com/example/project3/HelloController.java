@@ -23,6 +23,10 @@ public class HelloController {
     @FXML Button close;
     @FXML Button deposit;
     @FXML Button withdraw;
+    @FXML Button print;
+    @FXML Button printP;
+    @FXML Button printPI;
+    @FXML Button updateFees;
     @FXML TextField fnametext;
     @FXML TextField lnametext;
     @FXML TextField dobpicker;
@@ -233,7 +237,35 @@ public class HelloController {
         teller.handle(strArr);
     }
 
-    public String convertAcctTypeToCode(String acctType){
+    public void controllerPrintAll(ActionEvent e) throws IOException{
+        String userCommand = "P";
+        String[] strArr =
+                (userCommand.replaceAll("\\s+", " ").split(" "));
+        teller.handle(strArr);
+    }
+
+    public void controllerPrintByType(ActionEvent e) throws IOException{
+        String userCommand = "PT";
+        String[] strArr =
+                (userCommand.replaceAll("\\s+", " ").split(" "));
+        teller.handle(strArr);
+    }
+
+    public void controllerPrintWithFeesInterest(ActionEvent e) throws IOException{
+        String userCommand = "PI";
+        String[] strArr =
+                (userCommand.replaceAll("\\s+", " ").split(" "));
+        teller.handle(strArr);
+    }
+
+    public void controllerUpdateBalancesAndDisplay(ActionEvent e) throws IOException{
+        String userCommand = "UB";
+        String[] strArr =
+                (userCommand.replaceAll("\\s+", " ").split(" "));
+        teller.handle(strArr);
+    }
+
+    private String convertAcctTypeToCode(String acctType){
         switch(acctType){
             case "Checking": return "C";
             case "Savings": return "S";
@@ -244,12 +276,12 @@ public class HelloController {
         return "";
     }
 
-    public String convertBooleanToLoyalty(boolean b){
+    private String convertBooleanToLoyalty(boolean b){
         if(b) return "1";
         return "0";
     }
 
-    public String convertCampusCode(String campusC){
+    private String convertCampusCode(String campusC){
         String str = campusC.trim();
         if(str.equals("NB")) return "0";
         else if(str.equals("Newark")) return "1";

@@ -142,18 +142,18 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="64.0" layoutY="35.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Print">
+                        <Button fx:id="print" layoutX="64.0" layoutY="35.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" onAction="#controllerPrintAll" text="Print">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="printP" layoutX="64.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Print by Account Types">
+                        <Button fx:id="printP" layoutX="64.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" onAction="#controllerPrintByType" text="Print by Account Types">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Button>
-                        <Button fx:id="printPI" layoutX="331.0" layoutY="35.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Print by Fees &amp; Monthly Interests" />
-                        <Button layoutX="331.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Update Fees &amp; Balances">
+                        <Button fx:id="printPI" layoutX="331.0" layoutY="35.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" onAction="#controllerPrintWithFeesInterest" text="Print by Fees and Monthly Interests" />
+                        <Button fx:id="updateFees" layoutX="331.0" layoutY="132.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" onAction="#controllerUpdateBalancesAndDisplay" text="Update Fees and Balances">
                            <font>
                               <Font size="13.0" />
                            </font>

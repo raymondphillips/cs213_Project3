@@ -52,9 +52,9 @@ public class BankTeller {
      *
      * @param strArr a string that starts with a command and executes it
      */
-    public void handle(String[] strArr) {
+    public String handle(String[] strArr) {
         int NOT_FOUND = -1;
-
+        String toReturn = "";
         switch (strArr[0]) {
             case "O":
                 if (isInformationValid(strArr)) {
@@ -106,10 +106,11 @@ public class BankTeller {
                 }
                 break;
             default:
-                System.out.println("Invalid command!");
+                //System.out.println("Invalid command!");
+                toReturn = "Invalid command!";
                 break;
         }
-
+        return toReturn;
     }
 
     /**
