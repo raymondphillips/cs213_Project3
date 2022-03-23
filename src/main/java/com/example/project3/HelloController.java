@@ -21,11 +21,19 @@ public class HelloController {
     }
     @FXML Button open;
     @FXML Button close;
+    @FXML Button deposit;
+    @FXML Button withdraw;
     @FXML TextField fnametext;
     @FXML TextField lnametext;
     @FXML TextField dobpicker;
     @FXML TextField openingDeposit;
+    @FXML TextField depositFname;
+    @FXML TextField depositLname;
+    @FXML TextField depositDOB;
+    @FXML TextField depositAmount;
     @FXML ToggleGroup acctype;
+    @FXML ToggleGroup campus;
+    @FXML ToggleGroup depositAcctype;
     @FXML RadioButton checking;
     @FXML RadioButton collegeChecking;
     @FXML RadioButton savings;
@@ -33,9 +41,13 @@ public class HelloController {
     @FXML RadioButton NB;
     @FXML RadioButton Newark;
     @FXML RadioButton Camden;
+    @FXML RadioButton depositCheckings;
+    @FXML RadioButton depositSavings;
+    @FXML RadioButton depositMM;
+    @FXML RadioButton depositCC;
     @FXML CheckBox loyal;
-    @FXML ToggleGroup campus;
     @FXML TextArea consoleOutput;
+
 
     BankTeller teller;
     public static final int IN_DATABASE_AND_OPEN = -2;
@@ -163,6 +175,57 @@ public class HelloController {
         }
 
         String userCommand = "C\t" + selectedAccount + "\t" + fname + " " + lname + " " + dob;
+
+        String[] strArr =
+                (userCommand.replaceAll("\\s+", " ").split(" "));
+
+        teller.handle(strArr);
+
+    }
+
+    public void controllerDeposit(ActionEvent e) throws IOException{
+        String fname = depositFname.getText();
+        String lname = depositLname.getText();
+        String dob = depositDOB.getText();
+
+        //gets selected accttype button
+        RadioButton selected = (RadioButton) depositAcctype.getSelectedToggle();
+        String selectedAccount = "";
+        if(selected == null){
+            //error handle for unselected acct type
+        } else{
+            selectedAccount = convertAcctTypeToCode(selected.getText());
+        }
+
+        String depositAmnt = depositAmount.getText();
+
+        String userCommand = "D\t" + selectedAccount + "\t" + fname + " " + lname + " " + dob +
+                 " " + depositAmnt;
+
+        String[] strArr =
+                (userCommand.replaceAll("\\s+", " ").split(" "));
+
+        teller.handle(strArr);
+    }
+
+    public void controllerWithdraw(ActionEvent e) throws IOException{
+        String fname = depositFname.getText();
+        String lname = depositLname.getText();
+        String dob = depositDOB.getText();
+
+        //gets selected accttype button
+        RadioButton selected = (RadioButton) depositAcctype.getSelectedToggle();
+        String selectedAccount = "";
+        if(selected == null){
+            //error handle for unselected acct type
+        } else{
+            selectedAccount = convertAcctTypeToCode(selected.getText());
+        }
+
+        String withdrawAmnt = depositAmount.getText();
+
+        String userCommand = "W\t" + selectedAccount + "\t" + fname + " " + lname + " " + dob +
+                " " + withdrawAmnt;
 
         String[] strArr =
                 (userCommand.replaceAll("\\s+", " ").split(" "));

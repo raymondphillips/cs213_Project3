@@ -125,12 +125,16 @@
                         <TextField fx:id="depositDOB" layoutX="120.0" layoutY="69.0" prefHeight="25.0" prefWidth="300.0" />
                         <TextField fx:id="depositAmount" layoutX="120.0" layoutY="163.0" prefHeight="25.0" prefWidth="295.0" />
                         <Label layoutX="15.0" layoutY="104.0" text="Account Type:" />
-                        <RadioButton fx:id="depositCheckings" layoutX="120.0" layoutY="104.0" mnemonicParsing="false" text="Checkings" />
-                        <RadioButton fx:id="depositSavings" layoutX="120.0" layoutY="125.0" mnemonicParsing="false" text="Savings" />
-                        <RadioButton fx:id="depositMM" layoutX="215.0" layoutY="104.0" mnemonicParsing="false" text="Money Market" />
-                        <RadioButton fx:id="depositCC" layoutX="215.0" layoutY="125.0" mnemonicParsing="false" text="College Checkings" />
-                        <Button fx:id="deposit" layoutX="425.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Deposit" />
-                        <Button fx:id="withdraw" layoutX="496.0" layoutY="163.0" mnemonicParsing="false" text="Withdraw" />
+                        <RadioButton fx:id="depositCheckings" layoutX="120.0" layoutY="104.0" mnemonicParsing="false" text="Checking" >
+                         <toggleGroup>
+                             <ToggleGroup fx:id="depositAcctype" />
+                         </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="depositSavings" layoutX="120.0" layoutY="125.0" mnemonicParsing="false" toggleGroup="$depositAcctype" text="Savings" />
+                        <RadioButton fx:id="depositMM" layoutX="215.0" layoutY="104.0" mnemonicParsing="false" toggleGroup="$depositAcctype" text="Money Market" />
+                        <RadioButton fx:id="depositCC" layoutX="215.0" layoutY="125.0" mnemonicParsing="false" toggleGroup="$depositAcctype" text="College Checking" />
+                        <Button fx:id="deposit" layoutX="425.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" onAction="#controllerDeposit" text="Deposit" />
+                        <Button fx:id="withdraw" layoutX="496.0" layoutY="163.0" mnemonicParsing="false" text="Withdraw" onAction="#controllerWithdraw"/>
                      </children></AnchorPane>
             </content>
           </Tab>
