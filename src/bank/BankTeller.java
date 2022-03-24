@@ -72,12 +72,16 @@ public class BankTeller {
                 break;
             case "D":
                 if (isInformationValid(strArr).equals("Good")) {
-                    depositMoney(strArr);
+                    toReturn = depositMoney(strArr);
+                } else{
+                    toReturn = isInformationValid(strArr);
                 }
                 break;
             case "W":
                 if (isInformationValid(strArr).equals("Good")) {
-                    withdrawMoney(strArr);
+                    toReturn = withdrawMoney(strArr);
+                }else{
+                    toReturn = isInformationValid(strArr);
                 }
                 break;
             case "P":
@@ -347,29 +351,33 @@ public class BankTeller {
      * @param strArr a string with the information to deposit money into an
      *               account
      */
-    public void depositMoney(String[] strArr) {
+    public String depositMoney(String[] strArr) {
         Account acc = createGenericAccount(strArr);
         double depositAmount;
         try {
             depositAmount = Double.parseDouble(strArr[5]);
             if (depositAmount <= 0) {
-                System.out.println(
-                        "Deposit - amount cannot be 0 or negative.");
+//                System.out.println(
+//                        "Deposit - amount cannot be 0 or negative.");
+                return "Deposit - amount cannot be 0 or negative.";
             } else {
                 int loc = accountDatabase.depositSearchDatabase(acc);
                 if (loc == IN_DATABASE_AND_OPEN) {
                     acc.setBalance(depositAmount);
                     accountDatabase.deposit(acc);
-                    System.out.println("Deposit - balance updated.");
+//                    System.out.println("Deposit - balance updated.");
+                    return "Deposit - balance updated.";
                 } else {
-                    System.out.println(
-                            acc.holder.toString() + " " + acc.getType() +
-                                    " is not in the database.");
+//                    System.out.println(
+//                            acc.holder.toString() + " " + acc.getType() +
+//                                    " is not in the database.");
+                    return acc.holder.toString() + " " + acc.getType() + " is not in the database.";
                 }
 
             }
         } catch (NumberFormatException ex) {
-            System.out.println("Not a valid amount.");
+//            System.out.println("Not a valid amount.");
+            return "Not a valid amount.";
         }
     }
 
@@ -379,36 +387,40 @@ public class BankTeller {
      * @param strArr a string with the information to withdraw money from
      *               an account
      */
-    public void withdrawMoney(String[] strArr) {
+    public String withdrawMoney(String[] strArr) {
         Account acc = createGenericAccount(strArr);
         try {
             double depositAmount = Double.parseDouble(strArr[5]);
 
             if (depositAmount <= 0) {
-                System.out.println(
-                        "Withdraw - amount cannot be 0 or negative.");
-                return;
+//                System.out.println(
+//                        "Withdraw - amount cannot be 0 or negative.");
+                return "Withdraw - amount cannot be 0 or negative.";
             }
             acc.setBalance(depositAmount);
             if (!accountDatabase.withdraw(acc)) {
                 Account accCheck = accountDatabase.getAccount(acc);
                 if (accCheck == null) {
-                    System.out.println(
-                            acc.holder.toString() + " " + acc.getType() +
-                                    " is not in the database.");
+//                    System.out.println(
+//                            acc.holder.toString() + " " + acc.getType() +
+//                                    " is not in the database.");
+                    return acc.holder.toString() + " " + acc.getType() + " is not in the database.";
                 }
                 if (accountDatabase.getAccount(acc) != null &&
                         accountDatabase.getAccount(acc).getBalance() <
                                 depositAmount) {
-                    System.out.println("Withdraw - insufficient fund.");
+//                    System.out.println("Withdraw - insufficient fund.");
+                    return "Withdraw - insufficient fund.";
                 }
-
             } else {
-                System.out.println("Withdraw - balance updated.");
+//                System.out.println("Withdraw - balance updated.");
+                return "Withdraw - balance updated.";
             }
         } catch (NumberFormatException ex) {
-            System.out.println("Not a valid amount.");
+            //System.out.println("Not a valid amount.");
+            return "Not a valid amount.";
         }
+        return "";
     }
 }
 

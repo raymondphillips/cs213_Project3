@@ -217,9 +217,8 @@ public class HelloController {
         //gets selected accttype button
         RadioButton selected = (RadioButton) depositAcctype.getSelectedToggle();
         String selectedAccount = "";
-        if(selected == null){
-            //error handle for unselected acct type
-        } else{
+
+        if(selected != null){
             selectedAccount = convertAcctTypeToCode(selected.getText());
         }
 
@@ -231,7 +230,13 @@ public class HelloController {
         String[] strArr =
                 (userCommand.replaceAll("\\s+", " ").split(" "));
 
-        teller.handle(strArr);
+        if(strArr.length < 6 || isDepAcctTypeNotSelected()){
+            consoleOutput.setText("Missing data for opening an account.");
+            return;
+        }
+
+        String output = teller.handle(strArr);
+        consoleOutput.setText(output);
     }
 
     public void controllerWithdraw(ActionEvent e) throws IOException{
@@ -256,7 +261,13 @@ public class HelloController {
         String[] strArr =
                 (userCommand.replaceAll("\\s+", " ").split(" "));
 
-        teller.handle(strArr);
+        if(strArr.length < 6 || isDepAcctTypeNotSelected()){
+            consoleOutput.setText("Missing data for opening an account.");
+            return;
+        }
+
+        String output = teller.handle(strArr);
+        consoleOutput.setText(output);
     }
 
     public void controllerPrintAll(ActionEvent e) throws IOException{
@@ -316,5 +327,9 @@ public class HelloController {
 
     private boolean isAcctTypeNotSelected(){
         return !savings.isSelected() && !checking.isSelected() && !moneyMarket.isSelected() && !collegeChecking.isSelected();
+    }
+
+    private boolean isDepAcctTypeNotSelected(){
+        return !depositSavings.isSelected() && !depositCheckings.isSelected() && !depositCC.isSelected() && !depositMM.isSelected();
     }
 }
