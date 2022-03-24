@@ -307,6 +307,7 @@ public class BankUtil {
 
     private boolean checkDateValidity(String date){
         String[] arr = date.split("/");
+        if(arr.length < 3) return false;
         try{
             for(int i = 0; i < 3; i++){
                 int test = Integer.parseInt(arr[i]);

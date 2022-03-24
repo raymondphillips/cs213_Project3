@@ -106,6 +106,19 @@ public class BankTellerController {
                 Camden.setDisable(true);
                 Camden.setSelected(false);
                 loyal.setDisable(false);
+
+                String depositAmnt = openingDeposit.getText();
+
+                try{
+                    int num = Integer.parseInt(depositAmnt);
+                    if(num >= 2500){
+                        loyal.setSelected(true);
+                    } else{
+                        loyal.setSelected(false);
+                    }
+                } catch(NumberFormatException e){
+                    //do nothing, just let them pass onto pressing a button
+                }
             }
         });
 
@@ -134,7 +147,7 @@ public class BankTellerController {
                         loyal.setSelected(true);
                     }
                 } catch(NumberFormatException e){
-
+                    //do nothing, just let them pass onto pressing a button
                 }
             }
         });
