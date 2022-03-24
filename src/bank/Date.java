@@ -102,11 +102,13 @@ public class Date implements Comparable<Date> {
                     return false;
                 }
             } else if (this.month == FEBURARY) {
-                if (this.year % QUADRENINIAL == 0 &&
-                        this.year % CENTENNIAL == 0 &&
-                        this.year % QUATERCENTENNIAL == 0) {
-                    if (this.day > FEBLEAP) {
-                        return false;
+                if (this.year % QUADRENINIAL == 0) {
+                    if ( this.year % CENTENNIAL == 0) {
+                        if (this.year % QUATERCENTENNIAL == 0) {
+                            if (this.day > FEBLEAP) {
+                                return false;
+                            }
+                        }
                     }
                 } else if (this.day > FEBREGULAR) {
                     return false;
