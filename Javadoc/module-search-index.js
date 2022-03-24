@@ -1,0 +1,1 @@
+moduleSearchIndex = [{"l":"src.main.java.com.example.project3"}];updateSearchResults();
