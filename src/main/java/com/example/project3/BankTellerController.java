@@ -7,15 +7,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.beans.value.ChangeListener;
 
 import java.io.IOException;
 
-public class HelloController {
+/**
+ * This class serves as the link between the UI and our code from project 2.
+ * It allows us to interact with all of the code of the previous project through buttons and text fields in the UI.
+ * @author Raymond Phillips, Xiaoxuan Chen
+ */
+public class BankTellerController {
     @FXML Button open;
     @FXML Button close;
     @FXML Button deposit;
@@ -54,6 +55,11 @@ public class HelloController {
     public static final int IN_DATABASE_AND_OPEN = -2;
     public static final int NOT_FOUND = -1;
 
+    /**
+     * A method that initializes all of the buttons and variables
+     * @param primaryStage The stage of the UI
+     * @throws Exception library default
+     */
     public void initialize(Stage primaryStage) throws Exception{
         //disable editing for textarea
         consoleOutput.setEditable(false);
@@ -134,6 +140,11 @@ public class HelloController {
         });
     }
 
+    /**
+     * Method for the controller to handle the open account button being pressed
+     * @param e Exception for actions
+     * @throws IOException Default for library
+     */
     public void controllerOpen(ActionEvent e) throws IOException {
         //fname lname dob from text fields
         String fname = fnametext.getText();
@@ -180,6 +191,11 @@ public class HelloController {
         consoleOutput.setText(output);
     }
 
+    /**
+     * Method for the controller to handle the close account button being pressed
+     * @param e Error for any UI errors
+     * @throws IOException exceptions for any i/o errors in ui fields
+     */
     public void controllerClose(ActionEvent e) throws IOException{
         //fname lname dob from text fields
         String fname = fnametext.getText();
@@ -209,6 +225,11 @@ public class HelloController {
         consoleOutput.setText(output);
     }
 
+    /**
+     * Method for controller handling the deposit money button being pressed
+     * @param e Error for any UI errors
+     * @throws IOException exceptions for any i/o errors in ui fields
+     */
     public void controllerDeposit(ActionEvent e) throws IOException{
         String fname = depositFname.getText();
         String lname = depositLname.getText();
@@ -239,6 +260,11 @@ public class HelloController {
         consoleOutput.setText(output);
     }
 
+    /**
+     * Method for withdraw money button being pressed in UI
+     * @param e Error for any UI errors
+     * @throws IOException exceptions for any i/o errors in ui fields
+     */
     public void controllerWithdraw(ActionEvent e) throws IOException{
         String fname = depositFname.getText();
         String lname = depositLname.getText();
@@ -270,6 +296,11 @@ public class HelloController {
         consoleOutput.setText(output);
     }
 
+    /**
+     * Method for print all accounts being button pressed in UI
+     * @param e Error for any UI errors
+     * @throws IOException exceptions for any i/o errors in ui fields
+     */
     public void controllerPrintAll(ActionEvent e) throws IOException{
         String userCommand = "P";
         String[] strArr =
@@ -278,6 +309,11 @@ public class HelloController {
         consoleOutput.setText(output);
     }
 
+    /**
+     * Method for print all accounts by account type being pressed in UI
+     * @param e Error for any UI errors
+     * @throws IOException exceptions for any i/o errors in ui fields
+     */
     public void controllerPrintByType(ActionEvent e) throws IOException{
         String userCommand = "PT";
         String[] strArr =
@@ -286,6 +322,11 @@ public class HelloController {
         consoleOutput.setText(output);
     }
 
+    /** Method for print all accounts along with fees and interest being pressed in ui
+     *
+     * @param e Error for any UI errors
+     * @throws IOException exceptions for any i/o errors in ui fields
+     */
     public void controllerPrintWithFeesInterest(ActionEvent e) throws IOException{
         String userCommand = "PI";
         String[] strArr =
@@ -294,6 +335,11 @@ public class HelloController {
         consoleOutput.setText(output);
     }
 
+    /**
+     * Method for update balance and display new balances button being pressed in ui
+     * @param e Error for any UI errors
+     * @throws IOException exceptions for any i/o errors in ui fields
+     */
     public void controllerUpdateBalancesAndDisplay(ActionEvent e) throws IOException{
         String userCommand = "UB";
         String[] strArr =
@@ -302,6 +348,11 @@ public class HelloController {
         consoleOutput.setText(output);
     }
 
+    /**
+     * Private method that lets account type be converted to the appropriate argument
+     * @param acctType The type of account
+     * @return a String for the type of account
+     */
     private String convertAcctTypeToCode(String acctType){
         switch(acctType){
             case "Checking": return "C";
@@ -313,11 +364,21 @@ public class HelloController {
         return "";
     }
 
+    /**
+     * Method to convert whether or not the loyalty checkbox was ticked to an argument
+     * @param b Whether or not the checkbox was ticked
+     * @return A string for the argument for the loyalty
+     */
     private String convertBooleanToLoyalty(boolean b){
         if(b) return "1";
         return "0";
     }
 
+    /**
+     * A method to convert a campus name to the appropriate campus code
+     * @param campusC The campus name
+     * @return A string for the campus code
+     */
     private String convertCampusCode(String campusC){
         String str = campusC.trim();
         if(str.equals("NB")) return "0";
@@ -325,10 +386,18 @@ public class HelloController {
         else return "2";
     }
 
+    /**
+     * Helper method to check whether or not none of the account type buttons were pressed
+     * @return Boolean on whether or not no account type was selected
+     */
     private boolean isAcctTypeNotSelected(){
         return !savings.isSelected() && !checking.isSelected() && !moneyMarket.isSelected() && !collegeChecking.isSelected();
     }
 
+    /**
+     * Helper method to check whether or not none of the account type buttons were pressed for the deposit tab
+     * @return Boolean on whether or not no account type was selected
+     */
     private boolean isDepAcctTypeNotSelected(){
         return !depositSavings.isSelected() && !depositCheckings.isSelected() && !depositCC.isSelected() && !depositMM.isSelected();
     }
