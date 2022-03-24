@@ -16,10 +16,6 @@ import javafx.beans.value.ChangeListener;
 import java.io.IOException;
 
 public class HelloController {
-    @FXML private Label welcomeText;
-    @FXML protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
     @FXML Button open;
     @FXML Button close;
     @FXML Button deposit;
@@ -128,7 +124,7 @@ public class HelloController {
 
                 try{
                     int num = Integer.parseInt(currentText);
-                    if(num >= 2500){
+                    if(num >= 2500 && savings.isSelected()){
                         loyal.setSelected(true);
                     }
                 } catch(NumberFormatException e){
@@ -147,18 +143,16 @@ public class HelloController {
         //gets selected accttype button
         RadioButton selected = (RadioButton) acctype.getSelectedToggle();
         String selectedAccount = "";
-        if(selected == null){
-            //error handle
-        } else{
+
+        if(selected != null){
             selectedAccount = convertAcctTypeToCode(selected.getText());
         }
 
         //selected campus code
         RadioButton selectedCampus = (RadioButton) campus.getSelectedToggle();
         String selectedValCampus = "";
-        if(selectedCampus == null){
-            //error handle
-        } else{
+
+        if(selectedCampus != null){
             selectedValCampus = convertCampusCode(selectedCampus.getText());
         }
 
@@ -177,7 +171,13 @@ public class HelloController {
         String[] strArr =
                 (userCommand.replaceAll("\\s+", " ").split(" "));
 
-        teller.handle(strArr);
+        //System.out.println(userCommand);
+        if(strArr.length <5 || isAcctTypeNotSelected()){
+            consoleOutput.setText("Missing data for opening an account.");
+            return;
+        }
+        String output = teller.handle(strArr);
+        consoleOutput.setText(output);
     }
 
     public void controllerClose(ActionEvent e) throws IOException{
@@ -200,8 +200,13 @@ public class HelloController {
         String[] strArr =
                 (userCommand.replaceAll("\\s+", " ").split(" "));
 
-        teller.handle(strArr);
-
+        //System.out.println(userCommand);
+        if(strArr.length < 5 || isAcctTypeNotSelected()){
+            consoleOutput.setText("Missing data for opening an account.");
+            return;
+        }
+        String output = teller.handle(strArr);
+        consoleOutput.setText(output);
     }
 
     public void controllerDeposit(ActionEvent e) throws IOException{
@@ -307,5 +312,9 @@ public class HelloController {
         if(str.equals("NB")) return "0";
         else if(str.equals("Newark")) return "1";
         else return "2";
+    }
+
+    private boolean isAcctTypeNotSelected(){
+        return !savings.isSelected() && !checking.isSelected() && !moneyMarket.isSelected() && !collegeChecking.isSelected();
     }
 }

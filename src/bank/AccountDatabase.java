@@ -303,11 +303,12 @@ public class AccountDatabase {
     /**
      * prints out the fee and interest rates of the accounts in the database
      */
-    public void updatePrintFeeAndInterest() {
+    public String updatePrintFeeAndInterest() {
+        String toReturn ="";
         if (accounts != null) {
             if (this.accounts[0] == null) {
-                this.printByAccountType();
-                return;
+                toReturn += this.printByAccountType();
+                return toReturn;
             }
 
             for (Account account : accounts) {
@@ -318,7 +319,9 @@ public class AccountDatabase {
                 }
             }
         }
-        this.printByAccountType();
+        //this.printByAccountType();
+        toReturn += this.printByAccountType();
+        return toReturn;
     }
 
     /**

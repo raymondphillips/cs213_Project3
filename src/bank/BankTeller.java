@@ -57,32 +57,36 @@ public class BankTeller {
         String toReturn = "";
         switch (strArr[0]) {
             case "O":
-                if (isInformationValid(strArr)) {
-                    addAccount(strArr);
+                if (isInformationValid(strArr).equals("Good")) {
+                    toReturn = addAccount(strArr);
+                } else{
+                    toReturn = isInformationValid(strArr);
                 }
                 break;
             case "C":
-                if (isInformationValid(strArr)) {
-                    removeAccount(strArr);
+                if (isInformationValid(strArr).equals("Good")) {
+                    toReturn = removeAccount(strArr);
+                } else{
+                    toReturn = isInformationValid(strArr);
                 }
                 break;
             case "D":
-                if (isInformationValid(strArr)) {
+                if (isInformationValid(strArr).equals("Good")) {
                     depositMoney(strArr);
                 }
                 break;
             case "W":
-                if (isInformationValid(strArr)) {
+                if (isInformationValid(strArr).equals("Good")) {
                     withdrawMoney(strArr);
                 }
                 break;
             case "P":
-                if (isInformationValid(strArr)) {
+                if (isInformationValid(strArr).equals("Good")) {
                     toReturn = this.accountDatabase.print();
                 }
                 break;
             case "PT":
-                if (isInformationValid(strArr)) {
+                if (isInformationValid(strArr).equals("Good")) {
                     if (!accountDatabase.isEmpty()) {
                         //System.out.println("\n*list of accounts by account type.");
                         toReturn += "*list of accounts by account type.\n";
@@ -91,18 +95,19 @@ public class BankTeller {
                 }
                 break;
             case "PI":
-                if (isInformationValid(strArr)) {
+                if (isInformationValid(strArr).equals("Good")) {
                     toReturn += this.accountDatabase.printFeeAndInterest();
                 }
                 break;
             case "UB":
-                if (isInformationValid(strArr)) {
+                if (isInformationValid(strArr).equals("Good")) {
                     if (!accountDatabase.isEmpty()) {
-                        System.out.println(
-                                "\n*list of accounts with updated " +
-                                        "balance");
+//                        System.out.println(
+//                                "\n*list of accounts with updated " +
+//                                        "balance");
+                        toReturn += "*list of accounts with updated balance\n";
                     }
-                    this.accountDatabase.updatePrintFeeAndInterest();
+                    toReturn += this.accountDatabase.updatePrintFeeAndInterest();
                 }
                 break;
             default:
@@ -118,16 +123,19 @@ public class BankTeller {
      *
      * @param strArr array that has the information to remove an account.
      */
-    private void removeAccount(String[] strArr) {
+    private String removeAccount(String[] strArr) {
+        String toReturn = "";
         Account acc = createGenericAccount(strArr);
         if (accountDatabase.getAccStatus(acc)) {
-            System.out.println("Account is closed already.");
-            return;
+//            System.out.println("Account is closed already.");
+            return "Account is closed already.";
         }
         if (!this.accountDatabase.close(acc)) {
-            System.out.println("Account not found!");
+//            System.out.println("Account not found!");
+            return "Account not found!";
         } else {
-            System.out.println("Account closed.");
+            //System.out.println("Account closed.");
+            return "Account closed.";
         }
     }
 
@@ -136,18 +144,18 @@ public class BankTeller {
      *
      * @param strArr an array that has the information to open an account.
      */
-    private void addAccount(String[] strArr) {
+    private String addAccount(String[] strArr) {
+        String toReturn = "";
         Account acc = createGenericAccount(strArr);
         double depositAmount = Double.parseDouble(strArr[5]);
         acc.setBalance(depositAmount);
         int alreadyInDatabase = accountDatabase.searchDatabase(acc);
         if(alreadyInDatabase > NOT_FOUND && (acc.getType().equals("Checking") || acc.getType().equals("College Checking"))){
             boolean crossExists = accountDatabase.checkCOrCCCrossExists(acc);
-
             if(crossExists){
-                System.out.println(acc.holder.toString() + " same account(type)" +
-                        " is in the database.");
-                return;
+//                System.out.println(acc.holder.toString() + " same account(type)" +
+//                        " is in the database.");
+                return acc.holder.toString() + " same account(type) is in the database.";
             }
         }
         if (alreadyInDatabase > NOT_FOUND) {
@@ -156,7 +164,7 @@ public class BankTeller {
                     int campusCode = Integer.parseInt(strArr[6]);
                     if (isCampusCodeValid(campusCode)) {
                         ((CollegeChecking) acc).setCampusCode(campusCode);
-                    } else return;
+                    } else return toReturn;
                 }
                 case "S" -> {
                     boolean loyalty = false;
@@ -166,23 +174,24 @@ public class BankTeller {
                         loyalty = false;
                     }
 
-
                     ((Savings) acc).setLoyalty(loyalty);
                 }
                 case "MM" -> ((MoneyMarket) acc).setLoyalty(false);
             }
             this.accountDatabase.open(acc);
-            System.out.println("Account reopened.");
+            //System.out.println("Account reopened.");
+            return "Account reopened.";
         } else if (alreadyInDatabase == IN_DATABASE_AND_OPEN) {
-            System.out.println(acc.holder.toString() + " same account(type)" +
-                                       " is in the database.");
+//            System.out.println(acc.holder.toString() + " same account(type)" +
+//                                       " is in the database.");
+            return acc.holder.toString() + " same account(type)" + " is in the database.";
         } else {
             switch (strArr[1]) {
                 case "CC" -> {
                     int campusCode = Integer.parseInt(strArr[6]);
                     if (isCampusCodeValid(campusCode)) {
                         ((CollegeChecking) acc).setCampusCode(campusCode);
-                    } else return;
+                    } else return toReturn;
                 }
                 case "S" -> {
                     boolean loyalty = false;
@@ -196,7 +205,8 @@ public class BankTeller {
                 case "MM" -> ((MoneyMarket) acc).setLoyalty(true);
             }
             this.accountDatabase.open(acc);
-            System.out.println("Account opened.");
+//            System.out.println("Account opened.");
+            return "Account opened.";
         }
     }
 
@@ -217,23 +227,23 @@ public class BankTeller {
                             strArr.length != 7) ||
                     ((strArr[1].equals("MM") || strArr[1].equals("C")) &&
                             strArr.length < 6)) {
-                System.out.println("Missing data for opening an account.");
+                //System.out.println("Missing data for opening an account.");
                 return false;
             }
             return true;
         } else if (strArr[0].equals("C") && strArr.length != 5) {
-            System.out.println("Missing data for opening an account.");
+            //System.out.println("Missing data for opening an account.");
             return false;
         } else if ((strArr[0].equals("W") || strArr[0].equals("D")) &&
                 strArr.length != 6) {
-            System.out.println("Missing data for opening an account.");
+            //System.out.println("Missing data for opening an account.");
             return false;
         } else {
             if (strArr.length != 1 &&
                     (strArr[0].equals("P") || strArr[0].equals("PT") ||
                             strArr[0].equals("PI") ||
                             strArr[0].equals("UB"))) {
-                System.out.println("Missing data for opening an account.");
+                //System.out.println("Missing data for opening an account.");
                 return false;
             } else {
                 return true;
@@ -248,9 +258,9 @@ public class BankTeller {
      *               account.
      * @return true if there is the information is valid, false otherwise
      */
-    private boolean isInformationValid(String[] strArr) {
+    private String isInformationValid(String[] strArr) {
         if (!isThereEnoughInformation(strArr)) {
-            return false;
+            return "Missing data for opening an account.";
         }
         if (strArr.length > 4) {
             Date dob = new Date(strArr[4]);
@@ -259,29 +269,33 @@ public class BankTeller {
                 try {
                     depositAmount = Double.parseDouble(strArr[5]);
                 } catch (NumberFormatException ex) {
-                    System.out.println("Not a valid amount.");
-                    return false;
+//                    System.out.println("Not a valid amount.");
+//                    return false;
+                    return "Not a valid amount.";
                 }
                 if (depositAmount <= 0) {
-                    System.out.println(
-                            "Initial deposit cannot be 0 or negative.");
-                    return false;
+//                    System.out.println(
+//                            "Initial deposit cannot be 0 or negative.");
+//                    return false;
+                    return "Initial deposit cannot be 0 or negative.";
                 } else if (strArr[1].equals("MM") && depositAmount < 2500) {
-                    System.out.println(
-                            "Minimum of $2500 to open a MoneyMarket account" +
-                                    ".");
-                    return false;
+//                    System.out.println(
+//                            "Minimum of $2500 to open a MoneyMarket account" +
+//                                    ".");
+//                    return false;
+                    return "Minimum of $2500 to open a MoneyMarket account.";
                 }
             }
 
 
             if (new Profile("", "", dob).isValidDOB()) {
-                System.out.println("Date of birth invalid.");
-                return false;
+//                System.out.println("Date of birth invalid.");
+//                return false;
+                return "Date of birth invalid.";
             }
         }
-        return true;
-
+//        return true;
+        return "Good";
     }
 
     /**
