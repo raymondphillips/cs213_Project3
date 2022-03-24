@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author Raymond Phillips, Xiaoxuan Chen
  */
-public class BankTeller {
+public class BankUtil {
     public static final int IN_DATABASE_AND_OPEN = -2;
     public static final int NOT_FOUND = -1;
     public AccountDatabase accountDatabase;

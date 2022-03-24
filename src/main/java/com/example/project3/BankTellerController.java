@@ -2,7 +2,7 @@ package src.main.java.com.example.project3;
 
 import javafx.scene.input.KeyEvent;
 import src.bank.AccountDatabase;
-import src.bank.BankTeller;
+import src.bank.BankUtil;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -51,7 +51,7 @@ public class BankTellerController {
     @FXML TextArea consoleOutput;
 
 
-    BankTeller teller;
+    BankUtil teller;
     public static final int IN_DATABASE_AND_OPEN = -2;
     public static final int NOT_FOUND = -1;
 
@@ -64,7 +64,7 @@ public class BankTellerController {
         //disable editing for textarea
         consoleOutput.setEditable(false);
         //initialize bankteller
-        teller = new BankTeller();
+        teller = new BankUtil();
         teller.accountDatabase = new AccountDatabase();
         //initialize buttons
         NB.setDisable(true);
