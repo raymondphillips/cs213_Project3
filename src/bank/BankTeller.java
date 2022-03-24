@@ -267,6 +267,9 @@ public class BankTeller {
             return "Missing data for opening an account.";
         }
         if (strArr.length > 4) {
+            if(!checkDateValidity(strArr[4])){
+                return "Date of birth invalid.";
+            }
             Date dob = new Date(strArr[4]);
             double depositAmount;
             if (strArr[0].equals("O")) {
@@ -300,6 +303,18 @@ public class BankTeller {
         }
 //        return true;
         return "Good";
+    }
+
+    private boolean checkDateValidity(String date){
+        String[] arr = date.split("/");
+        try{
+            for(int i = 0; i < 3; i++){
+                int test = Integer.parseInt(arr[i]);
+            }
+        }catch(NumberFormatException e){
+            return false;
+        }
+        return true;
     }
 
     /**

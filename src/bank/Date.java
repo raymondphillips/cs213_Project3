@@ -57,7 +57,6 @@ public class Date implements Comparable<Date> {
         month = Integer.parseInt(st1.nextToken());
         day = Integer.parseInt(st1.nextToken());
         year = Integer.parseInt(st1.nextToken());
-
     }
 
     /**
